@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * Implements hook_theme().
+ */
+function orejime_complient_videos_theme($existing, $type, $theme, $path) {
+  return [
+    'orejime_video' => [
+      'variables' => [
+        'original' => NULL,
+        'imageUrl' => NULL,
+        'height' => NULL,
+        'width' => NULL,
+        'videoID' => NULL,
+      ],
+    ],
+  ];
+}
