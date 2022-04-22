@@ -1,0 +1,4 @@
+orejimeVideos:
+  version: 1.x
+  js:
+    js/orejime.videos.js: {}

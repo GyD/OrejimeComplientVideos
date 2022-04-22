@@ -31,7 +31,6 @@ class YoutubeProcessor {
       $renderable = [
         '#theme' => 'orejime_video',
         '#original' => $video['source'],
-        '#imageUrl' => $this->generateYoutubeImage($videoID),
         '#width' => $video['width'],
         '#height' => $video['height'],
         '#videoID' => 'orejime-youtube-' . $videoID
@@ -43,15 +42,6 @@ class YoutubeProcessor {
     }
 
     return $processedText;
-  }
-
-  /**
-   * @param $videoID
-   *
-   * @return string
-   */
-  private function generateYoutubeImage($videoID) {
-    return 'https://img.youtube.com/vi/' . $videoID . '/hqdefault.jpg';
   }
 
   /**
