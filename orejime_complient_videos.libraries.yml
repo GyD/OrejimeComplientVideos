@@ -1,4 +1,5 @@
 orejimeVideos:
-  version: 1.x
+  version: VERSION
+  header: false
   js:
     js/orejime.videos.js: {}

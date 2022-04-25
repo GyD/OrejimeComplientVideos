@@ -31,8 +31,6 @@ class YoutubeProcessor {
       $renderable = [
         '#theme' => 'orejime_video',
         '#original' => $video['source'],
-        '#width' => $video['width'],
-        '#height' => $video['height'],
         '#videoID' => 'orejime-youtube-' . $videoID
       ];
 
@@ -56,16 +54,9 @@ class YoutubeProcessor {
 
     foreach ($matches[1] as $k => $videoID) {
       if (!empty($videoID)) {
-        $dom = Html::load($text);
-        $domIframe = $dom->getElementsByTagName('iframe');
-
-        $height = $domIframe[0]->getAttribute('height');
-        $width = $domIframe[0]->getAttribute('width');
 
         $this->videos[$videoID] = [
-          'source' => $matches[0][$k],
-          'width' => $width,
-          'height' => $height,
+          'source' => $matches[0][$k]
         ];
 
         $processedText = str_ireplace($matches[0][$k], '[orejime-youtube=' . $videoID . ']', $text);

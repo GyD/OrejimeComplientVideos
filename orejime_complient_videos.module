@@ -15,8 +15,6 @@ function orejime_complient_videos_theme($existing, $type, $theme, $path) {
     'orejime_video' => [
       'variables' => [
         'original' => NULL,
-        'height' => NULL,
-        'width' => NULL,
         'videoID' => NULL,
       ],
     ],
