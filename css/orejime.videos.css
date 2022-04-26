@@ -8,7 +8,7 @@
 .orejime-embed iframe,
 .orejime-embed object,
 .orejime-embed embed,
-.orejime-embed .content {
+.orejime-embed .orejime-content {
   position: absolute;
   top: 0;
   left: 0;
@@ -26,4 +26,13 @@
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+}
+
+.orejime-cookie-icon {
+  width: 5rem;
+  height: 5rem;
+  background: url("../assets/img/cookie-bite-solid.svg");
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
 }
