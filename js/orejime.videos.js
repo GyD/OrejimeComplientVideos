@@ -4,7 +4,8 @@
     
     tryToLoadContent();
     
-    $("#orejime-loadconsent").on("click", function() {
+    $("#orejime-loadconsent").on("click", function(e) {
+      e.preventDefault();
       orejime.show();
     });
 
