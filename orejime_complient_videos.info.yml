@@ -1,6 +1,9 @@
 name: Orejime Complient Vidéos
 type: module
 description: This plugin intend to make vidéos complient with orejime
-version: '8.x-1.0'
+version: "8.x-1.0"
 core_version_requirement: ^8 || ^9
 package: custom
+
+libraries:
+  - 'orejime_complientc_videos/font-awesome'

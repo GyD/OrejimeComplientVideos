@@ -1,4 +1,23 @@
 orejimeVideos:
   version: 1.x
+  css:
+    layout:
+      css/orejime.css: {}
+      css/orejime.videos.css: {}
   js:
+    js/orejime.js: {}
+    js/orejime-config.js: {}
     js/orejime.videos.js: {}
+  dependencies:
+      - core/jquery
+
+font-awesome:
+  remote: https://fortawesome.github.io/Font-Awesome/
+  version: 5.13.1
+  license:
+    name: MIT
+    url: https://fontawesome.com/license/free/
+    gpl-compatible: true
+  css:
+    theme:
+      //use.fontawesome.com/releases/v5.13.1/css/all.css: { type: external, minified: true }
