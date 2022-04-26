@@ -15,7 +15,8 @@
     
     function tryToLoadContent() {
 
-      let socialmedia = orejime.internals.manager.states.socialmedia;
+      // let socialmedia = orejime.internals.manager.states.socialmedia;
+      let socialmedia = true;
       
       if(socialmedia) {
 
