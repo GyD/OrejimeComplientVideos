@@ -6,4 +6,4 @@ core_version_requirement: ^8 || ^9
 package: custom
 
 libraries:
-  - 'orejime_complientc_videos/font-awesome'
+  - 'orejime_complient_videos/font-awesome'
