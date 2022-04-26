@@ -16,9 +16,16 @@
 
       let socialmedia = orejime.internals.manager.states.socialmedia;
       
-      if(socialmedia) {      
-        contents = $('.embed').html();
-        $('.orejime-embed.placeholder .content').html(contents);
+      if(socialmedia) {
+
+        $(".orejime-template").each(function() {
+          const videoID = $(this).attr("data-videoid");
+          const contents = $(this).html();
+
+          $(".orejime-embed.placeholder[data-videoid='"+videoID+"'] .orejime-content").html(contents);
+
+        });
+
       }
     }
   
