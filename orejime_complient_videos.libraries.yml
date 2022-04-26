@@ -1,5 +1,6 @@
 orejimeVideos:
-  version: 1.x
+  version: VERSION
+  header: false
   css:
     layout:
       css/orejime.css: {}

@@ -28,18 +28,28 @@ class OrejimeOEmbedFormatter extends OEmbedFormatter {
    * {@inheritDoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
-    $element = parent::viewElements($items, $langcode);
+    $elements = parent::viewElements($items, $langcode);
 
-    return [
-      '#theme' => 'orejime_video',
-      '#original' => $element,
-      '#videoID' => 'test',
-      "#attached" => [
-        "library" => [
-          'orejime_complient_videos/orejimeVideos',
-        ]
-      ],
-    ];
+    // Get parent
+    $parent = $items->getParent()->getEntity();
+    // generate id based on parent entity type and entity id
+    $parentID = $parent->getEntityTypeId() . '-' . $parent->id();
+
+    foreach ($elements as $key => &$element) {
+      $element = [
+        '#theme' => 'orejime_video',
+        '#original' => $element,
+        // videoID is parentID (entity type + drupal id) followed by position in the array
+        '#videoID' => $parentID . '--' . $key,
+        "#attached" => [
+          "library" => [
+            'orejime_complient_videos/orejimeVideos',
+          ],
+        ],
+      ];
+    }
+
+    return $elements;
   }
 
 }
