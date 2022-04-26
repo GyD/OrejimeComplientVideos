@@ -3,11 +3,8 @@ orejimeVideos:
   header: false
   css:
     layout:
-      css/orejime.css: {}
       css/orejime.videos.css: {}
   js:
-    js/orejime.js: {}
-    js/orejime-config.js: {}
     js/orejime.videos.js: {}
   dependencies:
       - core/jquery
