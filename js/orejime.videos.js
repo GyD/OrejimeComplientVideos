@@ -20,11 +20,11 @@
       
       if(socialmedia) {
 
-        $(".orejime-template").each(function() {
+        $(".orejime_template").each(function() {
           const videoID = $(this).attr("data-videoid");
           const contents = $(this).html();
 
-          $(".orejime-embed.placeholder[data-videoid='"+videoID+"'] .orejime-content").html(contents);
+          $(".orejime_embed.placeholder[data-videoid='"+videoID+"'] .orejime_content").html(contents);
 
         });
 
