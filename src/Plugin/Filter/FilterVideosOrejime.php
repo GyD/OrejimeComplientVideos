@@ -2,9 +2,12 @@
 
 namespace Drupal\orejime_complient_videos\Plugin\Filter;
 
+use Drupal\Component\Utility\Html;
 use Drupal\filter\FilterProcessResult;
 use Drupal\filter\Plugin\FilterBase;
-use Drupal\orejime_complient_videos\Processor\YoutubeProcessor;
+use Drupal\orejime_complient_videos\Processor\embededContentProcessor;
+use Drupal\orejime_complient_videos\Processor\externalElementsProcessor;
+use Drupal\orejime_complient_videos\Processor\iFrameProcessor;
 
 /**
  * Provides a filter to convert URLs into links.
@@ -21,13 +24,10 @@ class FilterVideosOrejime extends FilterBase {
    * {@inheritdoc}
    */
   public function process($text, $langcode) {
-    // <iframe width height src title frameborder allow allowfullscreen>
-    $youtubeProcessor = new YoutubeProcessor();
+    $processor = new externalElementsProcessor();
     $result = new FilterProcessResult($text);
 
-    $processedText = $youtubeProcessor->preprocess($text);
-    $processedText = $youtubeProcessor->process($processedText);
-
+    $processedText = $processor->process($text);
 
     $result->setProcessedText($processedText);
 

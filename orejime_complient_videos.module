@@ -1,5 +1,14 @@
 <?php
 
+function orejime_complient_videos_concerned_websites(){
+  return [
+    'youtube.com',
+    'youtu.be',
+    'vimeo',
+    'twitter'
+  ];
+}
+
 /**
  * Implements hook_preprocess_HOOK().
  */
@@ -15,7 +24,7 @@ function orejime_complient_videos_theme($existing, $type, $theme, $path) {
     'orejime_video' => [
       'variables' => [
         'original' => NULL,
-        'videoID' => NULL,
+        'contentID' => NULL,
       ],
     ],
   ];

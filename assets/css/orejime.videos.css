@@ -31,7 +31,7 @@
 .orejime-cookie-icon {
   width: 5rem;
   height: 5rem;
-  background: url("../assets/img/cookie-bite-solid.svg");
+  background: url("../img/cookie-bite-solid.svg");
   -ms-flex-item-align: center;
       -ms-grid-row-align: center;
       align-self: center;

@@ -2,8 +2,10 @@
 
 namespace Drupal\orejime_complient_videos\Plugin\Field\FieldFormatter;
 
+use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\media\Plugin\Field\FieldFormatter\OEmbedFormatter;
+use http\Url;
 
 /**
  * Plugin implementation of the 'oembed' formatter.
@@ -24,32 +26,27 @@ use Drupal\media\Plugin\Field\FieldFormatter\OEmbedFormatter;
  */
 class OrejimeOEmbedFormatter extends OEmbedFormatter {
 
+  use OrejimeWrapperTrait;
+
   /**
-   * {@inheritDoc}
+   * @param $item
+   *
+   * @return bool
    */
-  public function viewElements(FieldItemListInterface $items, $langcode) {
-    $elements = parent::viewElements($items, $langcode);
+  protected function needWrapper($item) {
+    $value = $item->getValue();
 
-    // Get parent
-    $parent = $items->getParent()->getEntity();
-    // generate id based on parent entity type and entity id
-    $parentID = $parent->getEntityTypeId() . '-' . $parent->id();
+    if (isset($value['value'])) {
+      $url = UrlHelper::parse($value['value']);
 
-    foreach ($elements as $key => &$element) {
-      $element = [
-        '#theme' => 'orejime_video',
-        '#original' => $element,
-        // videoID is parentID (entity type + drupal id) followed by position in the array
-        '#videoID' => $parentID . '--' . $key,
-        "#attached" => [
-          "library" => [
-            'orejime_complient_videos/orejimeVideos',
-          ],
-        ],
-      ];
+      foreach (orejime_complient_videos_concerned_websites() as $website) {
+        if (stripos($url['path'], $website) !== FALSE) {
+          return TRUE;
+        }
+      }
     }
 
-    return $elements;
+    return FALSE;
   }
 
 }
