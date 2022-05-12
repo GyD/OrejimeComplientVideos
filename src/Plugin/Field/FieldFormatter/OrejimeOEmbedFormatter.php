@@ -39,7 +39,7 @@ class OrejimeOEmbedFormatter extends OEmbedFormatter {
     if (isset($value['value'])) {
       $url = UrlHelper::parse($value['value']);
 
-      foreach (orejime_complient_videos_concerned_websites() as $website) {
+      foreach (orejime_complient_videos_filtered_domains() as $website) {
         if (stripos($url['path'], $website) !== FALSE) {
           return TRUE;
         }

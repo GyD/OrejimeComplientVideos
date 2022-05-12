@@ -1,27 +1,29 @@
 <?php
 
-
 namespace Drupal\orejime_complient_videos\Processor;
-
 
 use DOMDocument;
 use DOMXPath;
+use Drupal;
 use Drupal\Component\Utility\Crypt;
 use Drupal\Component\Utility\Html;
-use Drupal\Console\Bootstrap\Drupal;
-use Drupal\Core\Render\Markup;
 
 class externalElementsProcessor {
 
+  /**
+   * @param $text
+   *
+   * @return string
+   */
   public function process($text) {
 
     $dom = Html::load($text);
     $xpath = new DOMXPath($dom);
-    $renderer = \Drupal::service('renderer');
+    $renderer = Drupal::service('renderer');
 
     $queries = [];
 
-    foreach (orejime_complient_videos_concerned_websites() as $website) {
+    foreach (orejime_complient_videos_filtered_domains() as $website) {
       $queries[] = "//*[contains(@src,'{$website}')]";
     }
 
@@ -36,11 +38,7 @@ class externalElementsProcessor {
         '#contentID' => $this->getContentKey($html),
       ];
 
-      #$test = $dom->createDocumentFragment();
-      #$test->appendXML($renderer->render($element));
-
-      #$domNode->parentNode->replaceChild($test, $domNode);
-      $this->set_inner_html($domNode, $renderer->render($element));
+      $this->setInnerHtml($domNode, $renderer->render($element));
     }
 
     return Html::serialize($dom);
@@ -55,17 +53,21 @@ class externalElementsProcessor {
     return Crypt::hashBase64($content);
   }
 
-  function set_inner_html($element, $content) {
-    $DOM_inner_HTML = new DOMDocument();
+  /**
+   * @param $element
+   * @param $content
+   */
+  private function setInnerHtml($element, $content) {
+    $tmpDOM = new DOMDocument();
     $internal_errors = libxml_use_internal_errors(TRUE);
-    $DOM_inner_HTML->loadHTML(mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'));
+    $tmpDOM->loadHTML(mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'));
     libxml_use_internal_errors($internal_errors);
-    $content_node = $DOM_inner_HTML->getElementsByTagName('body')->item(0);
-    $content_node = $element->ownerDocument->importNode($content_node, TRUE);
+    $contentNode = $tmpDOM->getElementsByTagName('body')->item(0);
+    $contentNode = $element->ownerDocument->importNode($contentNode, TRUE);
     while ($element->hasChildNodes()) {
       $element->removeChild($element->firstChild);
     }
-    $element->parentNode->replaceChild($content_node, $element);
+    $element->parentNode->replaceChild($contentNode, $element);
   }
 
 }

@@ -5,8 +5,6 @@ namespace Drupal\orejime_complient_videos\Plugin\Field\FieldFormatter;
 use DOMXPath;
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\UrlHelper;
-use Drupal\Core\Field\FormatterBase;
-use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\text\Plugin\Field\FieldFormatter\TextDefaultFormatter;
 
 /**
@@ -26,7 +24,6 @@ class OrejimeTextDefaultFormatter extends TextDefaultFormatter {
 
   use OrejimeWrapperTrait;
 
-
   /**
    * @param $item
    *
@@ -42,7 +39,7 @@ class OrejimeTextDefaultFormatter extends TextDefaultFormatter {
       foreach ($xpath->query('//*[@src]') as $domNode) {
         $url = UrlHelper::parse($domNode->getAttribute('src'));
 
-        foreach (orejime_complient_videos_concerned_websites() as $website) {
+        foreach (orejime_complient_videos_filtered_domains() as $website) {
           if (stripos($url['path'], $website) !== FALSE) {
             return TRUE;
           }

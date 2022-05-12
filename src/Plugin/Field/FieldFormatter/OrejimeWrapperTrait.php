@@ -27,7 +27,6 @@ trait OrejimeWrapperTrait {
         $element = [
           '#theme' => 'orejime_video',
           '#original' => $element,
-          // videoID is parentID (entity type + drupal id) followed by position in the array
           '#contentID' => $parentID . '--' . $key,
         ];
       }

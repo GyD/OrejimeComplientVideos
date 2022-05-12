@@ -1,12 +1,14 @@
 <?php
 
-function orejime_complient_videos_concerned_websites(){
-  return [
-    'youtube.com',
-    'youtu.be',
-    'vimeo',
-    'twitter'
-  ];
+/**
+ * @return mixed
+ */
+function orejime_complient_videos_filtered_domains() {
+  $config = Drupal::service('config.factory')->getEditable('orejime_complient_videos.settings');
+
+  $filtered_domains = $config->get('filtered_domains');
+
+  return $filtered_domains;
 }
 
 /**
