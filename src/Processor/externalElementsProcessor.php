@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\orejime_complient_videos\Processor;
+namespace Drupal\orejime_videos\Processor;
 
 use DOMDocument;
 use DOMXPath;
@@ -23,7 +23,7 @@ class externalElementsProcessor {
 
     $queries = [];
 
-    foreach (orejime_complient_videos_filtered_domains() as $website) {
+    foreach (orejime_videos_filtered_domains() as $website) {
       $queries[] = "//*[contains(@src,'{$website}')]";
     }
 
@@ -57,7 +57,7 @@ class externalElementsProcessor {
    * @param $element
    * @param $content
    */
-  private function setInnerHtml($element, $content) {
+  private function setInnerHtml($originalElement, $html) {
     $tmpDOM = new DOMDocument();
     $internal_errors = libxml_use_internal_errors(TRUE);
     $tmpDOM->loadHTML(mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'));

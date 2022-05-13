@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\orejime_complient_videos\Plugin\Field\FieldFormatter;
+namespace Drupal\orejime_videos\Plugin\Field\FieldFormatter;
 
 use DOMXPath;
 use Drupal\Component\Utility\Html;
@@ -29,7 +29,7 @@ class OrejimeTextDefaultFormatter extends TextDefaultFormatter {
    *
    * @return bool
    */
-  protected function needWrapper($item) {
+  protected function needWrapper($item): bool {
     $value = $item->getValue();
 
     if (isset($value['value'])) {
@@ -39,7 +39,7 @@ class OrejimeTextDefaultFormatter extends TextDefaultFormatter {
       foreach ($xpath->query('//*[@src]') as $domNode) {
         $url = UrlHelper::parse($domNode->getAttribute('src'));
 
-        foreach (orejime_complient_videos_filtered_domains() as $website) {
+        foreach (orejime_videos_filtered_domains() as $website) {
           if (stripos($url['path'], $website) !== FALSE) {
             return TRUE;
           }

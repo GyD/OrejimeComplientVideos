@@ -1,20 +1,20 @@
 <?php
 
-namespace Drupal\orejime_complient_videos\Plugin\Field\FieldFormatter;
+namespace Drupal\orejime_videos\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldItemListInterface;
 
 /**
  * Trait OrejimeWrapperTrait
  *
- * @package Drupal\orejime_complient_videos\Plugin\Field\FieldFormatter
+ * @package Drupal\orejime_videos\Plugin\Field\FieldFormatter
  */
 trait OrejimeWrapperTrait {
 
   /**
    * {@inheritDoc}
    */
-  public function viewElements(FieldItemListInterface $items, $langcode) {
+  public function viewElements(FieldItemListInterface $items, $langcode): array {
     $elements = parent::viewElements($items, $langcode);
 
     // Get parent
@@ -40,7 +40,7 @@ trait OrejimeWrapperTrait {
    *
    * @return false
    */
-  protected function needWrapper($item) {
+  protected function needWrapper($item): bool {
     return FALSE;
   }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\orejime_complient_videos\Plugin\Field\FieldFormatter;
+namespace Drupal\orejime_videos\Plugin\Field\FieldFormatter;
 
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Field\FieldItemListInterface;
@@ -33,13 +33,13 @@ class OrejimeOEmbedFormatter extends OEmbedFormatter {
    *
    * @return bool
    */
-  protected function needWrapper($item) {
+  protected function needWrapper($item): bool {
     $value = $item->getValue();
 
     if (isset($value['value'])) {
       $url = UrlHelper::parse($value['value']);
 
-      foreach (orejime_complient_videos_filtered_domains() as $website) {
+      foreach (orejime_videos_filtered_domains() as $website) {
         if (stripos($url['path'], $website) !== FALSE) {
           return TRUE;
         }

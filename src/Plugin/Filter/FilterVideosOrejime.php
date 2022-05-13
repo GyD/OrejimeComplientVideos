@@ -1,13 +1,13 @@
 <?php
 
-namespace Drupal\orejime_complient_videos\Plugin\Filter;
+namespace Drupal\orejime_videos\Plugin\Filter;
 
 use Drupal\Component\Utility\Html;
 use Drupal\filter\FilterProcessResult;
 use Drupal\filter\Plugin\FilterBase;
-use Drupal\orejime_complient_videos\Processor\embededContentProcessor;
-use Drupal\orejime_complient_videos\Processor\externalElementsProcessor;
-use Drupal\orejime_complient_videos\Processor\iFrameProcessor;
+use Drupal\orejime_videos\Processor\embededContentProcessor;
+use Drupal\orejime_videos\Processor\externalElementsProcessor;
+use Drupal\orejime_videos\Processor\iFrameProcessor;
 
 /**
  * Provides a filter to convert URLs into links.
