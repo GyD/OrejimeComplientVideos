@@ -37,6 +37,13 @@ class externalElementsProcessor {
 
     foreach ($xpath->query(implode('|', $queries)) as $domNode) {
       /** @var \DOMElement $domNode */
+      $attributes = new Drupal\Core\Template\Attribute();
+      if( $domNode->hasAttribute('width') ){
+        $attributes->setAttribute('width', $domNode->getAttribute('width'));
+      }
+      if( $domNode->hasAttribute('height') ){
+        $attributes->setAttribute('height', $domNode->getAttribute('height'));
+      }
 
       $html = $dom->saveHTML($domNode);
 
@@ -44,6 +51,7 @@ class externalElementsProcessor {
         '#theme' => 'orejime_video',
         '#original' => $html,
         '#contentID' => $this->getContentKey($html),
+        '#attributes' => $attributes,
       ];
 
       $this->setInnerHtml($domNode, $renderer->render($element));
