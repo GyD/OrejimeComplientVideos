@@ -28,6 +28,10 @@ trait OrejimeWrapperTrait {
           '#theme' => 'orejime_video',
           '#original' => $element,
           '#contentID' => $parentID . '--' . $key,
+          '#attributes' => [
+            'width' => $element["#attributes"]["width"],
+            'height' => $element["#attributes"]["height"],
+          ],
         ];
       }
     }
