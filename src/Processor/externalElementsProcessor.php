@@ -24,7 +24,15 @@ class externalElementsProcessor {
     $queries = [];
 
     foreach (orejime_videos_filtered_domains() as $website) {
-      $queries[] = "//*[contains(@src,'{$website}')]";
+      /**
+       * Selector select:
+       *  - elements with SRC attribute that contain the website domain name,
+       *    that are not <source> and that do not have <picture> for parent ( <picture> can embed <img> )
+       *  - <video> and <audio> elements that have a children with a SRC attribute
+       *
+       *  Tip: use http://xpather.com to test selector
+       */
+      $queries[] = "//*[(not(self::source) and contains(@src,\"{$website}\") and not(parent::picture)) or ((self::video or self::audio or self::picture) and .//*[contains(@src, \"{$website}\")])]";
     }
 
     foreach ($xpath->query(implode('|', $queries)) as $domNode) {
@@ -54,20 +62,18 @@ class externalElementsProcessor {
   }
 
   /**
-   * @param $element
-   * @param $content
+   * @param $originalElement
+   * @param $html
    */
   private function setInnerHtml($originalElement, $html) {
     $tmpDOM = new DOMDocument();
-    $internal_errors = libxml_use_internal_errors(TRUE);
-    $tmpDOM->loadHTML(mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'));
-    libxml_use_internal_errors($internal_errors);
+    $tmpDOM->loadHTML($html);
     $contentNode = $tmpDOM->getElementsByTagName('body')->item(0);
-    $contentNode = $element->ownerDocument->importNode($contentNode, TRUE);
-    while ($element->hasChildNodes()) {
-      $element->removeChild($element->firstChild);
+    $contentNode = $originalElement->ownerDocument->importNode($contentNode, TRUE);
+    while ($originalElement->hasChildNodes()) {
+      $originalElement->removeChild($originalElement->firstChild);
     }
-    $element->parentNode->replaceChild($contentNode, $element);
+    $originalElement->parentNode->replaceChild($contentNode, $originalElement);
   }
 
 }

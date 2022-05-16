@@ -19,8 +19,8 @@
     function tryToLoadContent() {
 
       // let socialmedia = orejime.internals.manager.states.socialmedia;
-      let socialmedia = orejime.internals.manager.getConsent('matomo');
-        if (socialmedia) {
+      let socialmedia = orejime.internals.manager.getConsent(drupalSettings.orejime_videos.consent);
+      if (socialmedia) {
 
         $(".orejime_template").each(function () {
           const
