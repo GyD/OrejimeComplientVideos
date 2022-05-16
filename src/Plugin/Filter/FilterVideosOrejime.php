@@ -2,7 +2,6 @@
 
 namespace Drupal\orejime_videos\Plugin\Filter;
 
-use Drupal\Component\Utility\Html;
 use Drupal\filter\FilterProcessResult;
 use Drupal\filter\Plugin\FilterBase;
 use Drupal\orejime_videos\Processor\embededContentProcessor;
