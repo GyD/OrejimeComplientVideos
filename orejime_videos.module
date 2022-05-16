@@ -33,6 +33,7 @@ function orejime_videos_theme($existing, $type, $theme, $path) {
       'variables' => [
         'original' => NULL,
         'contentID' => NULL,
+        'attributes' => NULL,
       ],
     ],
   ];
