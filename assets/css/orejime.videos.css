@@ -1,14 +1,14 @@
-.orejime-embed {
+.orejime_embed {
   position: relative;
   padding-bottom: 56.25%;
   height: 0;
   overflow: hidden;
   min-width: 20rem;
 }
-.orejime-embed iframe,
-.orejime-embed object,
-.orejime-embed embed,
-.orejime-embed .orejime-content {
+.orejime_embed iframe,
+.orejime_embed object,
+.orejime_embed embed,
+.orejime_embed .orejime_content {
   position: absolute;
   top: 0;
   left: 0;
@@ -28,7 +28,7 @@
           justify-content: center;
 }
 
-.orejime-cookie-icon {
+.orejime_cookie-icon {
   width: 5rem;
   height: 5rem;
   background: url("../img/cookie-bite-solid.svg");
