@@ -3,9 +3,7 @@
 namespace Drupal\orejime_videos\Plugin\Field\FieldFormatter;
 
 use Drupal\Component\Utility\UrlHelper;
-use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\media\Plugin\Field\FieldFormatter\OEmbedFormatter;
-use http\Url;
 
 /**
  * Plugin implementation of the 'oembed' formatter.
