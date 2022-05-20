@@ -1,9 +1,9 @@
-.orejim_embed {
+.orejime_embed {
   position: relative;
   padding-bottom: 56.25%;
   height: 0;
   overflow: hidden;
-  min-width: 20rem;
+  width: 100%;
 
   iframe,
   object,
@@ -27,7 +27,7 @@
 .orejime_cookie-icon {
   width: 5rem;
   height: 5rem;
-  background: url('../img/cookie-bite-solid.svg');
+  background: url("../img/cookie-bite-solid.svg");
   align-self: center;
   margin-bottom: 1rem;
 }
