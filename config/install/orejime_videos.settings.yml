@@ -1,6 +1,8 @@
 filtered_domains:
-  - youtube.com
-  - youtu.be
-  - vimeo.com
-  - twitter.com
-orejime_consent: 'matomo'
+  youtube:
+    - youtube.com
+    - youtu.be
+  vimeo:
+    - vimeo.com
+  twitter:
+    - twitter.com

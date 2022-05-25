@@ -8,6 +8,11 @@ use Drupal;
 use Drupal\Component\Utility\Crypt;
 use Drupal\Component\Utility\Html;
 
+/**
+ * Class externalElementsProcessor
+ *
+ * @package Drupal\orejime_videos\Processor
+ */
 class externalElementsProcessor {
 
   /**
@@ -23,7 +28,7 @@ class externalElementsProcessor {
 
     $queries = [];
 
-    foreach (orejime_videos_filtered_domains() as $website) {
+    foreach (orejime_videos_filtered_hosts() as $website) {
       /**
        * Selector select:
        *  - elements with SRC attribute that contain the website domain name,
@@ -52,6 +57,7 @@ class externalElementsProcessor {
         '#original' => $html,
         '#contentID' => $this->getContentKey($html),
         '#attributes' => $attributes,
+        '#orejime_domain' => orejime_videos_get_url_domain($domNode->getAttribute('src')),
       ];
 
       $this->setInnerHtml($domNode, $renderer->render($element));

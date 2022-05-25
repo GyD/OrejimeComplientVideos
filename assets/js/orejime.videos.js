@@ -3,7 +3,7 @@
     changeWidthOfPlacholder()
     tryToLoadContent()
 
-    $("#orejime-loadconsent").on("click", function (e) {
+    $(document).on("click", ".orejime_loadconsent", function (e) {
       e.preventDefault()
       orejime.show()
     })
@@ -16,22 +16,20 @@
      * Check if the social media cookie is enabled, and load content if enabled
      */
     function tryToLoadContent() {
-      // let socialmedia = orejime.internals.manager.states.socialmedia;
-      let socialmedia = orejime.internals.manager.getConsent(
-        drupalSettings.orejime_videos.consent
-      )
-      if (socialmedia) {
-        $(".orejime_template").each(function () {
-          const EMBEDEDID = $(this).data("orejime-embeded-id"),
-            CONTENT = $(this).html()
+      $(".orejime_template").each(function () {
+        const domain = $(this).attr("data-orejime-domain");
 
-          $(
-            ".orejime_placeholder[data-orejime-embeded-id='" +
-              EMBEDEDID +
-              "'] .orejime_embed"
-          ).replaceWith(CONTENT)
-        })
-      }
+        if (!orejime.internals.manager.getConsent(domain)) {
+          return;
+        }
+
+        const embeded_id = $(this).data("orejime-embeded-id"),
+          content = $(this).html()
+        ;
+
+        $(".orejime_placeholder[data-orejime-embeded-id='" + embeded_id + "'] .orejime_embed").replaceWith(content)
+      })
+
     }
 
     /**
