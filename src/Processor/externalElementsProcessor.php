@@ -20,7 +20,7 @@ class externalElementsProcessor {
    *
    * @return string
    */
-  public function process($text, $domains) {
+  public function process($text, $consents) {
 
     $dom = Html::load($text);
     $xpath = new DOMXPath($dom);
@@ -28,7 +28,7 @@ class externalElementsProcessor {
 
     $queries = [];
 
-    foreach ($domains as $website) {
+    foreach ($consents as $website) {
       /**
        * Selector select:
        *  - elements with SRC attribute that contain the website domain name,
@@ -57,7 +57,7 @@ class externalElementsProcessor {
         '#original' => $html,
         '#contentID' => $this->getContentKey($html),
         '#attributes' => $attributes,
-        '#orejime_consent' => orejime_videos_get_orejime_consent_from_url($domNode->getAttribute('src'), $domains),
+        '#orejime_consent' => orejime_videos_get_orejime_consent_from_url($domNode->getAttribute('src'), $consents),
       ];
 
       $this->setInnerHtml($domNode, $renderer->render($element));

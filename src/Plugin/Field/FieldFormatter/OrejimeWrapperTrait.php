@@ -18,7 +18,7 @@ trait OrejimeWrapperTrait {
    */
   public static function defaultSettings() {
     return [
-        'filtered_domains' => 'youtube.com|youtube
+        'filtered_consents' => 'youtube.com|youtube
 youtu.be|youtube
 vimeo.com|vimeo
 twitter.com|twitter',
@@ -30,11 +30,11 @@ twitter.com|twitter',
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
     return parent::settingsForm($form, $form_state) + [
-        'filtered_domains' => [
+        'filtered_consents' => [
           '#type' => 'textarea',
-          '#title' => $this->t('Domains filtered for orejime embed'),
-          '#default_value' => $this->getSetting('filtered_domains'),
-          '#description' => $this->t('A list of host name and orejime constent domain. Please enter them one per line with the followed format: host.ext|consent'),
+          '#title' => $this->t('Consents filtered for orejime embed'),
+          '#default_value' => $this->getSetting('filtered_consents'),
+          '#description' => $this->t('A list of host name and orejime consent domain. Please enter them one per line with the followed format: host.ext|consent'),
         ],
       ];
   }
@@ -54,7 +54,6 @@ twitter.com|twitter',
       if ($this->needWrapper($items[$key])) {
         $value = $items[$key]->getValue();
         $url = UrlHelper::parse($value['value']);
-
 
         $element = [
           '#theme' => 'orejime_video',
@@ -85,14 +84,14 @@ twitter.com|twitter',
    * @return array
    */
   private function getSettingConsents(): array {
-    $domains = [];
+    $consents = [];
 
-    foreach (preg_split("/(\r\n|\n|\r)/", $this->settings["filtered_domains"]) as $line) {
-      [$host, $domain] = explode('|', $line);
-      $domains[$host] = $domain;
+    foreach (preg_split("/(\r\n|\n|\r)/", $this->settings["filtered_consents"]) as $line) {
+      [$host, $consent] = explode('|', $line);
+      $consents[$host] = $consent;
     }
 
-    return $domains;
+    return $consents;
   }
 
 }

@@ -15,7 +15,7 @@ use Drupal\orejime_videos\Processor\externalElementsProcessor;
  *     title=@Translation("Convert Videos into Orejime Videos"),
  *     type=Drupal\filter\Plugin\FilterInterface::TYPE_MARKUP_LANGUAGE,
  *     settings={
- *         "filtered_domains": "youtube.com|youtube
+ *         "filtered_consents": "youtube.com|youtube
 youtu.be|youtube
 vimeo.com|vimeo
 twitter.com|twitter",
@@ -31,7 +31,7 @@ class FilterVideosOrejime extends FilterBase {
     $processor = new externalElementsProcessor();
     $result = new FilterProcessResult($text);
 
-    $processedText = $processor->process($text, $this->getDomainSettings());
+    $processedText = $processor->process($text, $this->getConsentsSettings());
 
     $result->setProcessedText($processedText);
 
@@ -41,15 +41,15 @@ class FilterVideosOrejime extends FilterBase {
   /**
    * @return array
    */
-  private function getDomainSettings() {
-    $domains = [];
+  private function getConsentsSettings() {
+    $consents = [];
 
-    foreach (preg_split("/(\r\n|\n|\r)/", $this->settings["filtered_domains"]) as $line) {
-      [$host, $domain] = explode('|', $line);
-      $domains[$host] = $domain;
+    foreach (preg_split("/(\r\n|\n|\r)/", $this->settings["filtered_consents"]) as $line) {
+      [$host, $consent] = explode('|', $line);
+      $consents[$host] = $consent;
     }
 
-    return $domains;
+    return $consents;
   }
 
 
@@ -57,10 +57,10 @@ class FilterVideosOrejime extends FilterBase {
    * {@inheritdoc}
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
-    $form['filtered_domains'] = [
+    $form['filtered_consents'] = [
       '#type' => 'textarea',
-      '#title' => $this->t('Domains filtered for orejime embed'),
-      '#default_value' => $this->settings['filtered_domains'],
+      '#title' => $this->t('Consents filtered for orejime embed'),
+      '#default_value' => $this->settings['filtered_consents'],
       '#description' => $this->t('A list of host name and orejime constent domain. Please enter them one per line with the followed format: host.ext|consent'),
       '#attached' => [],
     ];

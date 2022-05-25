@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Function to get domain from url
+ * Function to get consent from url
  *
  * @param $url
  * @param $consents
