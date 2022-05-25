@@ -6,9 +6,9 @@
   function tryToLoadContent() {
     // eslint-disable-next-line func-names
     $(".orejime_template").each(function () {
-      const domain = $(this).attr("data-orejime-domain");
+      const consent = $(this).attr("data-orejime-consent");
 
-      if (!orejime.internals.manager.getConsent(domain)) {
+      if (!orejime.internals.manager.getConsent(consent)) {
         return;
       }
 

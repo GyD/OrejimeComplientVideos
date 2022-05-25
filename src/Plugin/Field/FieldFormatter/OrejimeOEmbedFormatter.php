@@ -3,6 +3,7 @@
 namespace Drupal\orejime_videos\Plugin\Field\FieldFormatter;
 
 use Drupal\Component\Utility\UrlHelper;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\media\Plugin\Field\FieldFormatter\OEmbedFormatter;
 
 /**
@@ -37,7 +38,7 @@ class OrejimeOEmbedFormatter extends OEmbedFormatter {
     if (isset($value['value'])) {
       $url = UrlHelper::parse($value['value']);
 
-      foreach (orejime_videos_filtered_domains() as $website) {
+      foreach ($this->getSettingConsents() as $website => $consent) {
         if (stripos($url['path'], $website) !== FALSE) {
           return TRUE;
         }

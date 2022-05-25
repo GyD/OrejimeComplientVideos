@@ -20,7 +20,7 @@ class externalElementsProcessor {
    *
    * @return string
    */
-  public function process($text) {
+  public function process($text, $domains) {
 
     $dom = Html::load($text);
     $xpath = new DOMXPath($dom);
@@ -28,7 +28,7 @@ class externalElementsProcessor {
 
     $queries = [];
 
-    foreach (orejime_videos_filtered_hosts() as $website) {
+    foreach ($domains as $website) {
       /**
        * Selector select:
        *  - elements with SRC attribute that contain the website domain name,
@@ -43,10 +43,10 @@ class externalElementsProcessor {
     foreach ($xpath->query(implode('|', $queries)) as $domNode) {
       /** @var \DOMElement $domNode */
       $attributes = new Drupal\Core\Template\Attribute();
-      if( $domNode->hasAttribute('width') ){
+      if ($domNode->hasAttribute('width')) {
         $attributes->setAttribute('width', $domNode->getAttribute('width'));
       }
-      if( $domNode->hasAttribute('height') ){
+      if ($domNode->hasAttribute('height')) {
         $attributes->setAttribute('height', $domNode->getAttribute('height'));
       }
 
@@ -57,7 +57,7 @@ class externalElementsProcessor {
         '#original' => $html,
         '#contentID' => $this->getContentKey($html),
         '#attributes' => $attributes,
-        '#orejime_domain' => orejime_videos_get_url_domain($domNode->getAttribute('src')),
+        '#orejime_consent' => orejime_videos_get_orejime_consent_from_url($domNode->getAttribute('src'), $domains),
       ];
 
       $this->setInnerHtml($domNode, $renderer->render($element));

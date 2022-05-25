@@ -2,7 +2,9 @@
 
 namespace Drupal\orejime_videos\Plugin\Field\FieldFormatter;
 
+use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Trait OrejimeWrapperTrait
@@ -10,6 +12,32 @@ use Drupal\Core\Field\FieldItemListInterface;
  * @package Drupal\orejime_videos\Plugin\Field\FieldFormatter
  */
 trait OrejimeWrapperTrait {
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function defaultSettings() {
+    return [
+        'filtered_domains' => 'youtube.com|youtube
+youtu.be|youtube
+vimeo.com|vimeo
+twitter.com|twitter',
+      ] + parent::defaultSettings();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function settingsForm(array $form, FormStateInterface $form_state) {
+    return parent::settingsForm($form, $form_state) + [
+        'filtered_domains' => [
+          '#type' => 'textarea',
+          '#title' => $this->t('Domains filtered for orejime embed'),
+          '#default_value' => $this->getSetting('filtered_domains'),
+          '#description' => $this->t('A list of host name and orejime constent domain. Please enter them one per line with the followed format: host.ext|consent'),
+        ],
+      ];
+  }
 
   /**
    * {@inheritDoc}
@@ -24,6 +52,10 @@ trait OrejimeWrapperTrait {
 
     foreach ($elements as $key => &$element) {
       if ($this->needWrapper($items[$key])) {
+        $value = $items[$key]->getValue();
+        $url = UrlHelper::parse($value['value']);
+
+
         $element = [
           '#theme' => 'orejime_video',
           '#original' => $element,
@@ -32,6 +64,7 @@ trait OrejimeWrapperTrait {
             'width' => $element["#attributes"]["width"],
             'height' => $element["#attributes"]["height"],
           ],
+          '#orejime_consent' => orejime_videos_get_orejime_consent_from_url($url['path'], $this->getSettingConsents()),
         ];
       }
     }
@@ -46,6 +79,20 @@ trait OrejimeWrapperTrait {
    */
   protected function needWrapper($item): bool {
     return FALSE;
+  }
+
+  /**
+   * @return array
+   */
+  private function getSettingConsents(): array {
+    $domains = [];
+
+    foreach (preg_split("/(\r\n|\n|\r)/", $this->settings["filtered_domains"]) as $line) {
+      [$host, $domain] = explode('|', $line);
+      $domains[$host] = $domain;
+    }
+
+    return $domains;
   }
 
 }

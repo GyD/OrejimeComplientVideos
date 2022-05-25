@@ -1,65 +1,21 @@
 <?php
 
 /**
- * @return mixed
- */
-function orejime_videos_config() {
-  return Drupal::service('config.factory')
-    ->getEditable('orejime_videos.settings');
-}
-
-/**
- * Return Matomo domains from configuration
- *
- * @return mixed
- */
-function orejime_videos_filtered_matomo_domains() {
-  return array_keys(orejime_videos_config()->get('filtered_domains'));
-}
-
-/**
- * Return hosts that need to be filtered
- *
- * @return array
- */
-function orejime_videos_filtered_hosts() {
-  $output = [];
-
-  array_walk_recursive(orejime_videos_config()->get('filtered_domains'), function ($domain) use (&$output) {
-    $output[] = $domain;
-  });
-
-  return $output;
-}
-
-/**
- * @return mixed
- */
-function orejime_videos_filtered_hostsTodomain() {
-  $output = [];
-
-  foreach (orejime_videos_config()->get('filtered_domains') as $domain => $hosts) {
-    foreach ($hosts as $host) {
-      $output[$host] = $domain;
-    }
-  }
-
-  return $output;
-}
-
-/**
  * Function to get domain from url
  *
  * @param $url
+ * @param $consents
  *
- * @return mixed
+ * @return string|null
  */
-function orejime_videos_get_url_domain($url) {
-  foreach (orejime_videos_filtered_hostsTodomain() as $website => $domain) {
-    if (stripos($url, $website)) {
-      return $domain;
+function orejime_videos_get_orejime_consent_from_url($url, $consents): ?string {
+  foreach ($consents as $host => $consent) {
+    if (stripos($url, $host)) {
+      return $consent;
     }
   }
+
+  return NULL;
 }
 
 /**
@@ -67,22 +23,26 @@ function orejime_videos_get_url_domain($url) {
  */
 function orejime_videos_preprocess_orejime_video(&$variables) {
   $variables["#attached"]["library"][] = 'orejime_videos/orejimeVideos';
-  $variables["#attached"]['drupalSettings']['orejime_videos'] = [
-    'consents' => orejime_videos_filtered_matomo_domains(),
-  ];
 }
 
 /**
  * Implements hook_theme().
+ *
+ * @param $existing
+ * @param $type
+ * @param $theme
+ * @param $path
+ *
+ * @return \null[][][]
  */
-function orejime_videos_theme($existing, $type, $theme, $path) {
+function orejime_videos_theme($existing, $type, $theme, $path): array {
   return [
     'orejime_video' => [
       'variables' => [
         'original' => NULL,
         'contentID' => NULL,
         'attributes' => NULL,
-        'orejime_domain' => NULL,
+        'orejime_consent' => NULL,
       ],
     ],
   ];

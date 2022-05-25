@@ -1,10 +1,10 @@
-<template class="orejime_embed orejime_template" data-orejime-embeded-id="{{ contentID }}" data-orejime-domain="{{ orejime_domain }}">
+<template class="orejime_embed orejime_template" data-orejime-embeded-id="{{ contentID }}" data-orejime-consent="{{ orejime_consent }}">
   {{ original|raw }}
 </template>
 {% set classes = [
   'orejime_placeholder',
 ] %}
-<div{{ attributes.addClass(classes) }} data-orejime-embeded-id="{{ contentID }}" data-orejime-domain="{{ orejime_domain }}">
+<div{{ attributes.addClass(classes) }} data-orejime-embeded-id="{{ contentID }}" data-orejime-consent="{{ orejime_consent }}">
   <div class="orejime_embed">
     <div class="orejime_content">
       <div class="orejime_cookie-icon"></div>
